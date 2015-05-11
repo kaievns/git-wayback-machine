@@ -1,28 +1,25 @@
 module GitWaybackMachine
 
   class Engine
+    def initialize
+      @history   = GitWaybackMachine::History.new
+      @navigator = GitWaybackMachine::Navigator.new(@history)
 
-    def read_history
-      puts "Reading the history!"
-      @history = GitWaybackMachine::History.new
+      engage!
     end
 
-    def engage_navigator
-      GitWaybackMachine::Navigator.new(@history).on_change do |sha|
-        move_to sha
-      end
-
-    rescue Interrupt => e
-      nil # that's cool
+    def engage!
+      @navigator.on_change { |sha|  move_to sha }
     ensure
       rollback!
     end
 
-    def move_to(sha)
-      puts "Moving to #{sha}"
+    def move_to(entry)
+      puts "Moving to #{entry}"
     end
 
     def rollback!
+      move_to @history[0]
       puts "\rWarping back to the reality!"
     end
 

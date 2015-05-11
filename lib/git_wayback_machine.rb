@@ -1,10 +1,7 @@
 module GitWaybackMachine
 
   def self.boot
-    Engine.new.tap do |engine|
-      engine.read_history
-      engine.engage_navigator
-    end
+    Engine.new
   end
 
 end
