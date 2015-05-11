@@ -1,1 +1,1 @@
-require_relative "git_wayback_machinge"
+require_relative "./git_wayback_machine"

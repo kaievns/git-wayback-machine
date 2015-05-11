@@ -1,5 +1,9 @@
 module GitWaybackMachine
 
+  def self.boot
+    puts "blah"
+  end
+
 end
 
-require "git_wayback_machine/version"
+require_relative "./git_wayback_machine/version"

@@ -1,0 +1,15 @@
+PATH
+  remote: .
+  specs:
+    git-wayback-machine (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.9)
+  git-wayback-machine!
