@@ -8,6 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = GitWaybackMachine::VERSION
   spec.authors       = ["Nikolay Nemshilov"]
   spec.email         = ["nemshilov@gmail.com"]
+  spec.licenses      = ["MIT"]
 
   spec.summary       = "Wayback machine to navigate GIT log"
   spec.description   = "Wayback machine to navigate GIT log, for real!"
