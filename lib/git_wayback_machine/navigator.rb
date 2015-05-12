@@ -27,9 +27,11 @@ module GitWaybackMachine
     end
 
     def render
+      puts intro_text
+
       entries_slice.each do |entry|
         if entry == @current_entry
-          puts "\e[37;0m#{entry}\e[0m"
+          puts "\e[37;1m#{entry}\e[0m"
         else
           puts "\e[37;2m#{entry}\e[0m"
         end
@@ -37,10 +39,17 @@ module GitWaybackMachine
     end
 
     def cleanup
-      puts "Cleaning up the mess"
+      navigator_size = entries_slice.size + 2
+      print "\r\e[#{navigator_size}A"
+      print (" " * 120 + "\n") * navigator_size
+      print "\r\e[#{navigator_size}A"
     end
 
   private
+
+    def intro_text
+      "\e[37;2mUse \e[0m\e[37;0mUP\e[0m\e[37;2m and \e[0m\e[37;1mDOWN\e[0m\e[37;2m keys to switch between commits:\n\e[0m"
+    end
 
     def prev_entry
       index = @history.index(@current_entry)
