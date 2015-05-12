@@ -9,7 +9,7 @@ module GitWaybackMachine
       @controls      = GitWaybackMachine::Controls.new
     end
 
-    def on_change(&block)
+    def on_change(&callback)
       render
 
       @controls.on_event do |event|
@@ -18,6 +18,7 @@ module GitWaybackMachine
         when :down then @current_entry = next_entry
         end
 
+        callback.call(@current_entry)
         cleanup
         render
       end
@@ -31,9 +32,9 @@ module GitWaybackMachine
 
       entries_slice.each do |entry|
         if entry == @current_entry
-          puts "\e[37;1m#{entry}\e[0m"
+          puts " \e[37;1m#{entry}\e[0m"
         else
-          puts "\e[37;2m#{entry}\e[0m"
+          puts " \e[37;2m#{entry}\e[0m"
         end
       end
     end
@@ -48,7 +49,7 @@ module GitWaybackMachine
   private
 
     def intro_text
-      "\e[37;2mUse \e[0m\e[37;0mUP\e[0m\e[37;2m and \e[0m\e[37;1mDOWN\e[0m\e[37;2m keys to switch between commits:\n\e[0m"
+      " \e[37;2mUse \e[0m\e[37;0mUP\e[0m\e[37;2m and \e[0m\e[37;1mDOWN\e[0m\e[37;2m keys to switch between commits:\n\e[0m"
     end
 
     def prev_entry

@@ -7,6 +7,8 @@ module GitWaybackMachine
     end
 
     def start!
+      stash!
+
       @navigator.on_change do |commit|
         move_to commit
       end
@@ -18,12 +20,17 @@ module GitWaybackMachine
     end
 
     def move_to(entry)
-      puts "Moving to #{entry}"
+      `git reset --hard #{entry.sha}`
+    end
+
+    def stash!
+      @stash = `git stash -u`
     end
 
     def rollback!
+      puts "\rJumping back to the reality!"
       move_to @history[0]
-      puts "\rWarping back to the reality!"
+      `git stash pop` unless @stash.include?("No local changes to save")
     end
 
   end
