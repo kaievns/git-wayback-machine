@@ -16,7 +16,7 @@ module GitWaybackMachine
   private
 
     def raw_entries
-      `git log --pretty=format:'%h|%an|%cr|%s' --graph -#{SIZE}`.split("\n").map do |entry|
+      `git log --pretty=format:'%h|%an|%cr|%s'  -#{SIZE}`.split("\n").map do |entry|
         entry.sub(/\A\s*\*\s*/, "").split("|")
       end
     end
