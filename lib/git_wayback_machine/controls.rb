@@ -1,3 +1,5 @@
+require "io/console"
+
 module GitWaybackMachine
 
   class Controls
@@ -20,25 +22,20 @@ module GitWaybackMachine
   private
 
     def read_key
-      old_state = `stty -g`
-      `stty raw -echo`
+      STDIN.raw do |io|
+        key = io.getc.chr
 
-      c = STDIN.getc.chr
-
-      if c == "\e" # reading escape sequences
-        extra_thread = Thread.new do
-          c += STDIN.getc.chr + STDIN.getc.chr
+        if key == "\e"
+          extra_thread = Thread.new do
+            key += io.getc.chr + io.getc.chr
+          end
+          extra_thread.join(0.001)
+          extra_thread.kill
         end
-        extra_thread.join(0.001)
-        extra_thread.kill
+
+        key
       end
-
-      c
-
-    ensure
-      `stty #{old_state}`
     end
-
   end
 
 end
