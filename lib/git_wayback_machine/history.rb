@@ -9,7 +9,13 @@ module GitWaybackMachine
 
     class Entry < Struct.new(:sha, :name, :time, :comment)
       def to_s
-        "\e[33m#{sha}\e[37m | \e[35m#{name} \e[36m(#{time})\e[37m - #{comment}\e[0m"
+        meta           = "\e[33m#{sha}\e[37m | \e[35m#{name.ljust(17)} \e[36m(#{time})\e[37m - "
+        size_so_far    = meta.gsub(/\e\[\d+m/, "").size
+        terminal_width = `tput cols`.to_i
+        cut_comment    = comment.slice(0, terminal_width - size_so_far - 3)
+        cut_comment << "…" if comment.size > cut_comment.size
+
+        "#{meta}#{cut_comment}\e[0m"
       end
     end
 

@@ -41,8 +41,9 @@ module GitWaybackMachine
 
     def cleanup
       navigator_size = entries_slice.size + 2
+      terminal_size = `tput cols`.to_i
       print "\r\e[#{navigator_size}A"
-      print (" " * 120 + "\n") * navigator_size
+      print (" " * terminal_size + "\n") * navigator_size
       print "\r\e[#{navigator_size}A"
     end
 
